@@ -8,7 +8,7 @@ def scaled_colorbar(im, size="5%", pad=0.05):
     # create an axes on the right side of ax. The width of cax will be 5%
     # of ax and the padding between cax and ax will be fixed at 0.05 inch.
     divider = make_axes_locatable(plt.gca())
-    cax = divider.append_axes("right", size="5%", pad=0.05)
+    cax = divider.append_axes("right", size=size, pad=pad)
     return plt.colorbar(im, cax=cax)
 
 

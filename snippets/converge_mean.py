@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-def converge_mean(data, epsilon=0.1, maxiter=1e3, bounds="both"):
+def converge_mean(data, epsilon=0.1, maxiter=1e3, bounds="both", stdev=1):
     if bounds not in ["upper", "lower", "both"]:
         raise AttributeError(
             "`bounds` must be one of `upper`, `lower` or `both`"
@@ -29,9 +29,9 @@ def converge_mean(data, epsilon=0.1, maxiter=1e3, bounds="both"):
 
         mask = np.ones_like(data, dtype=bool)
         if bounds != "lower":
-            mask &= data <= mean + std
+            mask &= data <= mean + std * stdev
         if bounds != "upper":
-            mask &= data >= mean - std
+            mask &= data >= mean - std * stdev
 
         data = data[mask]
     else:

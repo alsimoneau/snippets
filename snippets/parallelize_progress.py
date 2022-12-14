@@ -8,8 +8,6 @@ from tqdm import tqdm
 
 @contextlib.contextmanager
 def tqdm_joblib(tqdm_object):
-    """Context manager to patch joblib to report into tqdm progress bar given as argument"""
-
     def tqdm_print_progress(self):
         if self.n_completed_tasks > tqdm_object.n:
             n_completed = self.n_completed_tasks - tqdm_object.n
@@ -28,7 +26,7 @@ def tqdm_joblib(tqdm_object):
 def parallelize_progress(func):
     def wrapper(iterable, *args):
         it = list(iterable)
-        with tqdm_joblib(tqdm(total=len(it))) as progress_bar:
+        with tqdm_joblib(tqdm(total=len(it))):
             return joblib.Parallel(n_jobs=-1, prefer="threads")(
                 joblib.delayed(func)(i, *args) for i in it
             )
